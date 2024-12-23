@@ -56,7 +56,7 @@ for i in range(len(reduced_df)):
 # Add the closest player to the DataFrame
 reduced_df['Closest Player'] = closest_points
 
-total = pd.merge(total, reduced_df[['Player', 'Closest Player']], on=['Player'], how='inner')
+total = pd.merge(total, reduced_df[['Player', 'Closest Player', 'PC1', 'PC2']], on=['Player'], how='inner')
 
 cluster_centers = kmeans.cluster_centers_
 
