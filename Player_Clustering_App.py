@@ -20,6 +20,8 @@ st.markdown("Select The Player to See their Position Group and Closest Player in
 clustered = pd.read_csv('EndKMeansClustering.csv')
 clustered.sort_values('Player', ascending=True, inplace=True)
 
+update_bolts = clustered.copy()
+
 clustered_copy = clustered.copy()
 
 def convert_to_list(cell):
@@ -86,7 +88,6 @@ st.write(f"{selected_player}'s closest statistics with {closest_player[0]} are {
 
 center_df = pd.read_csv('ClusterCentersData.csv')
 
-update_bolts = pd.read_csv('PCAPlayers.csv')
 
 cluster_highlight = update_bolts.loc[update_bolts['Player'] == selected_player]
 selected_cluster = cluster_highlight['cluster'].values[0]
