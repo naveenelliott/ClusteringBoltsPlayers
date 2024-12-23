@@ -74,7 +74,7 @@ clustered_player = clustered.loc[clustered['Player'] == selected_player]
 
 position_group = clustered_player['Other Cluster'].values
 position_group_desc = clustered_player['Cluster Description'].values
-closest_player = clustered_player['Closest Point'].values
+closest_player = clustered_player['Closest Player'].values
 
 closest_player_stats = clustered_player['Closest Statistics'].reset_index(drop=True)
 
