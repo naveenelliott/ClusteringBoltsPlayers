@@ -56,9 +56,9 @@ cluster_mapping2 = {
 }
 
 # Replace cluster numbers with corresponding strings
-clustered['Other Cluster'] = clustered['Cluster'].replace(cluster_mapping)
+clustered['Other Cluster'] = clustered['cluster'].replace(cluster_mapping)
 
-clustered['Cluster Description'] = clustered['Cluster'].replace(cluster_mapping2)
+clustered['Cluster Description'] = clustered['cluster'].replace(cluster_mapping2)
 
 players = list(clustered['Player'].unique())
 
@@ -89,11 +89,11 @@ center_df = pd.read_csv('ClusterCentersData.csv')
 update_bolts = pd.read_csv('PCAPlayers.csv')
 
 cluster_highlight = update_bolts.loc[update_bolts['Player'] == selected_player]
-selected_cluster = cluster_highlight['Cluster'].values[0]
+selected_cluster = cluster_highlight['cluster'].values[0]
 
 fig = go.Figure()
 
-other_clusters_df = update_bolts.loc[update_bolts['Cluster'] != selected_cluster]
+other_clusters_df = update_bolts.loc[update_bolts['cluster'] != selected_cluster]
 fig.add_trace(
     go.Scatter(
         mode='markers',
@@ -110,7 +110,7 @@ fig.add_trace(
     )
 )
 
-selected_cluster_df = update_bolts.loc[update_bolts['Cluster'] == selected_cluster]
+selected_cluster_df = update_bolts.loc[update_bolts['cluster'] == selected_cluster]
 cluster_pnames = selected_cluster_df['Player']
 fig.add_trace(
     go.Scatter(
@@ -145,7 +145,7 @@ fig.add_trace(
     )
 )
 
-center_df = center_df.loc[center_df['Cluster'] == selected_cluster]
+center_df = center_df.loc[center_df['cluster'] == selected_cluster]
 fig.add_trace(
     go.Scatter(
         mode='markers',
