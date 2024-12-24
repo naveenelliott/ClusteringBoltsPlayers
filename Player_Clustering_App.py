@@ -146,7 +146,7 @@ fig.add_trace(
     )
 )
 
-center_df = center_df.loc[center_df['cluster'] == selected_cluster]
+center_df = center_df.loc[center_df['Cluster'] == selected_cluster]
 fig.add_trace(
     go.Scatter(
         mode='markers',
