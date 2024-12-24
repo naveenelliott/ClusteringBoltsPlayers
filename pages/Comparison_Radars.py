@@ -47,7 +47,7 @@ df.rename(columns={'Progr Regain ': 'Progr Regain', 'Blocked Cross': 'Blk Cross'
 
 new_order = ['Player', 'Goal', 'Shots', 'SOT %', 'Assist', 'Pass into 18', 'Crosses', 'Dribble', 'Total Pass', 
              'Pass %', 'Forward Pass', 'Forward Pass %', 'Ball Recov', 'Intercepts', 'Progr Regain', 'Tackles', 'Tackle %', 'Clears',
-            'Total Distance', 'Total HID', 'Sprints', 'Accels', 'Decels', 'Max Speed']
+            'Total Distance', 'Total HID', 'Sprints', 'Max Speed']
 
 df = df[new_order]
 
