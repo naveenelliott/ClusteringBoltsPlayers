@@ -205,7 +205,6 @@ clustered_copy = clustered_copy.drop(columns=cols_we_want)
 
 st.write(clustered_copy)
 
-clustered_copy = clustered_copy[cols_we_want]
 
 def calculate_percentiles(df):
     percentiles_df = pd.DataFrame(index=df.index, columns=df.columns)
