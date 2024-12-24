@@ -203,7 +203,6 @@ cols_we_want = ['Closest Player', 'PC1', 'PC2', 'Closest Statistics', 'cluster']
 
 clustered_copy = clustered_copy.drop(columns=cols_we_want)
 
-st.write(clustered_copy)
 
 
 def calculate_percentiles(df):
