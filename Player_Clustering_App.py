@@ -207,6 +207,8 @@ cols_we_want = ['Player', 'Goal', 'Assist', 'Dribble',
        'Total Crosses', 'Total Long', 'Total Forward', 'Total Pass',
        'Total Recoveries', 'Total Interceptions']
 
+st.write(clustered_copy)
+
 clustered_copy = clustered_copy[cols_we_want]
 
 def calculate_percentiles(df):
