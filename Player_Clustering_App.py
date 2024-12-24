@@ -199,13 +199,9 @@ fig.update_layout(
 st.plotly_chart(fig)
 
 
-cols_we_want = ['Player', 'Goal', 'Assist', 'Dribble',
-       'Progr Regain ', 'Blocked Shot', 'Blocked Cross', 'Efforts on Goal',
-       'Pass into Oppo Box', 'Loss of Poss', 'Pass Completion ',
-       'Progr Pass Completion ', 'Total Tackles', 'Tackle %',
-       'Total Def Aerials', 'Total Clears', 'Total Att Aerials',
-       'Total Crosses', 'Total Long', 'Total Forward', 'Total Pass',
-       'Total Recoveries', 'Total Interceptions']
+cols_we_want = ['Closest Player', 'PC1', 'PC2', 'Closest Statistics', 'cluster']
+
+clustered_copy = clustered_copy.drop(columns=cols_we_want)
 
 st.write(clustered_copy)
 
