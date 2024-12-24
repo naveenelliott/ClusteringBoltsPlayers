@@ -16,10 +16,10 @@ df = df.sort_values('Order', ascending=False)
 df.reset_index(drop=True, inplace=True)
 
 temp_df = df.drop(0)
-players = list(temp_df['Player Full Name'].unique())
+players = list(temp_df['Player'].unique())
 compare_player = st.selectbox('Select the Player to compare in the Radar Chart from the Positional Cluster:', players)
 
-temp_df = df.loc[df['Player Full Name'] == compare_player]
+temp_df = df.loc[df['Player'] == compare_player]
 temp_df.reset_index(drop=True, inplace=True)
 
 if temp_df['Order'][0] == 1:
@@ -27,12 +27,12 @@ if temp_df['Order'][0] == 1:
 else:
     sub_string = 'a similar player in his cluster'
 
-selected_player = df['Player Full Name'][0]
+selected_player = df['Player'][0]
 
 st.session_state["prev_player"] = selected_player
 
 want = [selected_player, compare_player]
-df = df.loc[df['Player Full Name'].isin(want)]
+df = df.loc[df['Player'].isin(want)]
 df.reset_index(drop=True, inplace=True)
 del df['Order']
 
@@ -45,13 +45,13 @@ df.rename(columns={'Progr Regain ': 'Progr Regain', 'Blocked Cross': 'Blk Cross'
                    'Total Crosses': 'Crosses', 'Total Long': 'Long Pass', 'Total Forward': 'Forward Pass', 'Total Pass': 'Total Pass', 
                    'Total Recoveries': 'Ball Recov', 'Total Interceptions': 'Intercepts'}, inplace=True)
 
-new_order = ['Player Full Name', 'Goal', 'Shots', 'Att Aerials', 'Assist', 'Pass into 18', 'Crosses', 'Dribble', 'Loss of Poss', 'Total Pass', 
+new_order = ['Player', 'Goal', 'Shots', 'Att Aerials', 'Assist', 'Pass into 18', 'Crosses', 'Dribble', 'Loss of Poss', 'Total Pass', 
              'Pass %', 'Forward Pass', 'Forward Pass %', 'Long Pass', 'Ball Recov', 'Intercepts', 'Progr Regain', 'Tackles', 'Tackle %', 'Clears',
              'Def Aerials', 'Blk Shot', 'Blk Cross']
 
 df = df[new_order]
 
-params = [col for col in df.columns if col != 'Player Full Name']
+params = [col for col in df.columns if col != 'Player']
 print(params)
 low = [0] * len(params)
 high = [100] * len(params)
@@ -61,7 +61,7 @@ radar = Radar(params, low, high,  round_int=[True]*len(params),
               ring_width=1, center_circle_radius=1)
 
 st.write(df)
-del df['Player Full Name']
+del df['Player']
 
 fig, ax = radar.setup_axis()
 rings_inner = radar.draw_circles(ax=ax, facecolor='#D3D3D3', edgecolor='white')
