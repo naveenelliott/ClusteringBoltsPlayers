@@ -47,12 +47,6 @@ df.rename(columns={'Progr Regain ': 'Progr Regain', 'Blocked Cross': 'Blk Cross'
 
 st.write(df)
 
-new_order = ['Player', 'Goal', 'Shots', 'Att Aerials', 'Assist', 'Pass into 18', 'Crosses', 'Dribble', 'Loss of Poss', 'Total Pass', 
-             'Pass %', 'Forward Pass', 'Forward Pass %', 'Long Pass', 'Ball Recov', 'Intercepts', 'Progr Regain', 'Tackles', 'Tackle %', 'Clears',
-             'Def Aerials', 'Blk Shot', 'Blk Cross']
-
-df = df[new_order]
-
 params = [col for col in df.columns if col != 'Player']
 print(params)
 low = [0] * len(params)
