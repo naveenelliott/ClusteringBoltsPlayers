@@ -74,7 +74,7 @@ ax.scatter(vertices1[:, 0], vertices1[:, 1],
 ax.scatter(vertices2[:, 0], vertices2[:, 1],
            c='black', edgecolors='black', marker='o', s=50, zorder=2)
 range_labels = radar.draw_range_labels(ax=ax, fontsize=11.5)
-param_labels = radar.draw_param_labels(ax=ax, fontsize=12.5)
+param_labels = radar.draw_param_labels(ax=ax, fontsize=12)
 
 legend_radar = mpatches.Patch(color='#6bb2e2', alpha=0.8, label=f'{selected_player}')
 legend_compare = mpatches.Patch(color='black', alpha=0.5, label=f'{compare_player}')
