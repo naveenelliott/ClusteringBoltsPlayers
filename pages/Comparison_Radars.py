@@ -50,6 +50,8 @@ new_order = ['Player', 'Goal', 'Shots', 'Assist', 'SOT %', 'Pass into 18', 'Cros
              'Pass %', 'Forward Pass', 'Forward Pass %', 'Long Pass', 'Ball Recov', 'Intercepts', 'Progr Regain', 'Tackles', 'Tackle %', 'Clears',
              'Def Aerial %', 'Blk Shot', 'Blk Cross']
 
+df = df[new_order]
+
 params = [col for col in df.columns if col != 'Player']
 print(params)
 low = [0] * len(params)
