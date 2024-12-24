@@ -44,7 +44,7 @@ df.rename(columns={'Progr Regain ': 'Progr Regain', 'Blocked Cross': 'Blk Cross'
                    'Total Tackles': 'Tackles', 'Total Def Aerials': 'Def Aerials', 'Total Clears': 'Clears', 'Total Att Aerials': 'Att Aerials', 
                    'Total Crosses': 'Crosses', 'Total Long Passes': 'Long Pass', 'Total Forward Passes': 'Forward Pass', 'Total Passes': 'Total Pass', 
                    'Total Recoveries': 'Ball Recov', 'Total Interceptions': 'Intercepts', 'total_distance_m': 'Total Distance', 'total_high_intensity_distance_m': 'Total HID', 
-                  'sprint_events': 'Sprints': 'acceleration_events': 'Accels', 'deceleration_events': 'Decels', 'max_speed_kph': 'Max Speed'}, inplace=True)
+                  'sprint_events': 'Sprints', 'acceleration_events': 'Accels', 'deceleration_events': 'Decels', 'max_speed_kph': 'Max Speed'}, inplace=True)
 
 new_order = ['Player', 'Goal', 'Shots', 'Assist', 'SOT %' 'Pass into 18', 'Crosses', 'Dribble', 'Loss of Poss', 'Total Pass', 
              'Pass %', 'Forward Pass', 'Forward Pass %', 'Long Pass', 'Ball Recov', 'Intercepts', 'Progr Regain', 'Tackles', 'Tackle %', 'Clears',
