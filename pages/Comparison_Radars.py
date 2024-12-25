@@ -16,10 +16,10 @@ df = df.sort_values('Order', ascending=False)
 df.reset_index(drop=True, inplace=True)
 
 temp_df = df.drop(0)
-players = list(temp_df['Player Full Name'].unique())
+players = list(temp_df['Player'].unique())
 compare_player = st.selectbox('Select the Player to compare in the Radar Chart from the Positional Cluster:', players)
 
-temp_df = df.loc[df['Player Full Name'] == compare_player]
+temp_df = df.loc[df['Player'] == compare_player]
 temp_df.reset_index(drop=True, inplace=True)
 
 if temp_df['Order'][0] == 1:
@@ -27,12 +27,12 @@ if temp_df['Order'][0] == 1:
 else:
     sub_string = 'a similar player in his cluster'
 
-selected_player = df['Player Full Name'][0]
+selected_player = df['Player'][0]
 
 st.session_state["prev_player"] = selected_player
 
 want = [selected_player, compare_player]
-df = df.loc[df['Player Full Name'].isin(want)]
+df = df.loc[df['Player'].isin(want)]
 df.reset_index(drop=True, inplace=True)
 del df['Order']
 
@@ -40,18 +40,18 @@ st.markdown(f"This is a comparison of the {selected_player} and {sub_string} {co
 
 
 df.rename(columns={'Progr Regain ': 'Progr Regain', 'Blocked Cross': 'Blk Cross', 'Efforts on Goal': 'Shots', 'Pass into Oppo Box': 'Pass into 18', 
-                   'Blocked Shot': 'Blk Shot', 'Pass Completion ': 'Pass %', 'Progr Pass Completion ': 'Forward Pass %', 
-                   'Total Tackles': 'Tackles', 'Total Def Aerials': 'Def Aerials', 'Total Clears': 'Clears', 'Total Att Aerials': 'Att Aerials', 
-                   'Total Crosses': 'Crosses', 'Total Long': 'Long Pass', 'Total Forward': 'Forward Pass', 'Total Pass': 'Total Pass', 
-                   'Total Recoveries': 'Ball Recov', 'Total Interceptions': 'Intercepts'}, inplace=True)
+                   'Blocked Shot': 'Blk Shot', 'Pass Completion ': 'Pass %', 'Progr Pass %': 'Forward Pass %', 
+                   'Total Tackles': 'Tackles', 'Clearances': 'Clears', 'Total Crosses': 'Crosses', 'Total Long Passes': 'Long Pass', 'Total Forward Passes': 'Forward Pass', 'Total Passes': 'Total Pass', 
+                   'Recoveries': 'Ball Recov', 'Interceptions': 'Intercepts', 'total_distance_m': 'Total Distance', 'total_high_intensity_distance_m': 'Total HID', 
+                  'sprint_events': 'Sprints', 'acceleration_events': 'Accels', 'deceleration_events': 'Decels', 'max_speed_kph': 'Max Speed'}, inplace=True)
 
-new_order = ['Player Full Name', 'Goal', 'Shots', 'Att Aerials', 'Assist', 'Pass into 18', 'Crosses', 'Dribble', 'Loss of Poss', 'Total Pass', 
-             'Pass %', 'Forward Pass', 'Forward Pass %', 'Long Pass', 'Ball Recov', 'Intercepts', 'Progr Regain', 'Tackles', 'Tackle %', 'Clears',
-             'Def Aerials', 'Blk Shot', 'Blk Cross']
+new_order = ['Player', 'Goal', 'Shots', 'SOT %', 'Assist', 'Pass into 18', 'Crosses', 'Dribble', 'Total Pass', 
+             'Pass %', 'Forward Pass', 'Forward Pass %', 'Ball Recov', 'Intercepts', 'Progr Regain', 'Tackles', 'Tackle %', 'Clears',
+            'Total Distance', 'Total HID', 'Sprints', 'Max Speed']
 
 df = df[new_order]
 
-params = [col for col in df.columns if col != 'Player Full Name']
+params = [col for col in df.columns if col != 'Player']
 print(params)
 low = [0] * len(params)
 high = [100] * len(params)
@@ -61,7 +61,7 @@ radar = Radar(params, low, high,  round_int=[True]*len(params),
               ring_width=1, center_circle_radius=1)
 
 st.write(df)
-del df['Player Full Name']
+del df['Player']
 
 fig, ax = radar.setup_axis()
 rings_inner = radar.draw_circles(ax=ax, facecolor='#D3D3D3', edgecolor='white')
@@ -74,7 +74,7 @@ ax.scatter(vertices1[:, 0], vertices1[:, 1],
 ax.scatter(vertices2[:, 0], vertices2[:, 1],
            c='black', edgecolors='black', marker='o', s=50, zorder=2)
 range_labels = radar.draw_range_labels(ax=ax, fontsize=11.5)
-param_labels = radar.draw_param_labels(ax=ax, fontsize=13)
+param_labels = radar.draw_param_labels(ax=ax, fontsize=12)
 
 legend_radar = mpatches.Patch(color='#6bb2e2', alpha=0.8, label=f'{selected_player}')
 legend_compare = mpatches.Patch(color='black', alpha=0.5, label=f'{compare_player}')
