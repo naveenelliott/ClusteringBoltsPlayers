@@ -15,12 +15,21 @@ del total['Name'], total['Team Name'], total['Total Shots']
 # Using domain knowledge to filter out
 total.drop(columns={'Cross %', 'Long Pass %', 'Minutes', 'Goal Against'}, inplace=True)
 
+# FEATURE SELECTION 
+
+# dropping fouls conceded since this is actually Goals
+# dropping total long passes since it is similar to line breaks and has less variance
+# dropping events since they are highly correlated with the total run
+# dropping blocked stuff because they have a low variance
+total.drop(columns={'Foul Conceded', 'Total Long Passes', 'sprint_events',
+                    'high_intensity_events'}, inplace=True)
+
 # Standardize the data (optional but recommended)
 scaler = StandardScaler()
 data_scaled = scaler.fit_transform(total)
 
 # Apply K-Means with k=8
-kmeans = KMeans(n_clusters=7, random_state=42)  # Set a seed for reproducibility
+kmeans = KMeans(n_clusters=8, random_state=42)  # Set a seed for reproducibility
 kmeans.fit(data_scaled)
 
 # Add the cluster labels to the original DataFrame

@@ -15,21 +15,16 @@ connection = mysql.connector.connect(
 if connection.is_connected():
     print("Successfully connected to the database")
 
-try:
-    # Fetch all rows from the table
-    query = "SELECT * FROM player_non_position_season_report;"
-    df = pd.read_sql(query, connection)
-    
-    query = "SELECT * FROM player_non_position_game_report;"
-    df_game = pd.read_sql(query, connection)
-    df_game.columns = df_game.columns.str.replace('_', ' ', regex=True)
-    df_game = df_game[['Name', 'Team Name', 'Match Date', 'Minutes']]
-    df_game['Name'] = df_game['Name'].str.lower()
-    
-    cursor = connection.cursor()
-    
-finally:
-    connection.close()
+query = "SELECT * FROM player_non_position_season_report;"
+df = pd.read_sql(query, connection)
+
+
+query = "SELECT * FROM player_non_position_game_report;"
+df_game = pd.read_sql_query(query, connection)
+df_game.columns = df_game.columns.str.replace('_', ' ', regex=True)
+df_game = df_game[['Name', 'Team Name', 'Match Date', 'Minutes']]
+df_game['Name'] = df_game['Name'].str.lower()
+
     
 df.columns = df.columns.str.replace('_', ' ', regex=True)   
     
@@ -154,5 +149,6 @@ all_df.drop(columns=['Att Shot Blockd', 'Att 1v1', 'Shot on Target',
                      'Shot off Target', 'Crosses Claimed', 
                      'Save % ', 'Total Saves'], inplace=True)
 
+connection.close()
 
 all_df.to_csv('ClusteringBoltsPlayers/FormattedDataKMeansNew.csv', index=False)

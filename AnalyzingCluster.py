@@ -15,6 +15,39 @@ del total['Name'], total['Team Name'], total['Total Shots']
 # Using domain knowledge to filter out
 total.drop(columns={'Cross %', 'Long Pass %', 'Minutes', 'Goal Against'}, inplace=True)
 
+# FEATURE SELECTION 
+
+# dropping fouls conceded since this is actually Goals
+# dropping total long passes since it is similar to line breaks and has less variance
+# dropping events since they are highly correlated with the total run
+# dropping blocked stuff because they have a low variance
+total.drop(columns={'Foul Conceded', 'Total Long Passes', 'sprint_events',
+                    'high_intensity_events'}, inplace=True)
+
+# Low Variance
+variances = pd.DataFrame({
+    "Feature": total.columns,
+    "Variance": total.var()
+})
+
+# Filter features with low variance
+low_variance_features = variances[variances["Variance"] < 10]
+
+# Correlation
+correlation_matrix = pd.DataFrame(total).corr()
+
+# List to hold high correlation pairs
+high_corr_pairs = []
+
+# Iterate through the upper triangle of the correlation matrix
+for col in correlation_matrix.columns:
+    for row in correlation_matrix.index:
+        if row != col and abs(correlation_matrix.loc[row, col]) > 0.7:
+            high_corr_pairs.append((row, col, correlation_matrix.loc[row, col]))
+
+# Convert the list of pairs into a DataFrame
+high_corr_df = pd.DataFrame(high_corr_pairs, columns=["Feature_1", "Feature_2", "Correlation"])
+
 scaler = StandardScaler()
 scaled_data = scaler.fit_transform(total)
 scaled_df = pd.DataFrame(scaled_data, columns=total.columns)
@@ -65,7 +98,7 @@ plt.xticks(rotation=90)
 plt.grid()
 plt.show()
 
-# not filtering anything yet, because I want to see what general looks like
+# not filtering based on PC loadings
 
 # Silhouette Score
 scaler = StandardScaler()
@@ -92,7 +125,7 @@ plt.grid(True)
 plt.show()
 
 # 8 and 14 with general
-
+# 8 and 11 with filtering
 
 # Elbow Method
 # Apply KMeans for different numbers of clusters
@@ -117,3 +150,4 @@ knee_locator = KneeLocator(range(1, 19), inertia, curve="convex", direction="dec
 optimal_k = knee_locator.knee
 
 # again 8 or 14
+# again 8 or 11 with filtering
