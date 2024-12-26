@@ -7,6 +7,7 @@ from sklearn.decomposition import PCA
 from sklearn.preprocessing import StandardScaler
 from scipy.spatial.distance import cdist
 from sklearn.metrics import pairwise_distances_argmin_min
+from scipy.stats import percentileofscore
 
 total = pd.read_csv('ClusteringBoltsPlayers/FormattedDataKMeansNew.csv')
 players = total['Name']
@@ -76,7 +77,7 @@ cluster_centers_df['PC1'] = pca.transform(kmeans.cluster_centers_)[:, 0]
 cluster_centers_df['PC2'] = pca.transform(kmeans.cluster_centers_)[:, 1]
 cluster_centers_df['Cluster'] = range(0, len(cluster_centers_df))
 
-cluster_centers_df.to_csv('ClusteringBoltsPlayers/ClusterCentersData.csv', index=False)
+#cluster_centers_df.to_csv('ClusteringBoltsPlayers/ClusterCentersData.csv', index=False)
 
 
 top_closest_columns = []
@@ -100,4 +101,26 @@ for index, row in total.iterrows():
     
 total['Closest Statistics'] = top_closest_columns
 
-total.to_csv('ClusteringBoltsPlayers/EndKMeansClustering.csv', index=False)
+# Group by cluster and calculate the mean for each statistic
+cluster_means = total.groupby('cluster').mean()
+
+stat_columns = total.columns.difference(['Player', 'Closest Player', 'cluster', 'Closest Statistics'])
+
+# Initialize a dictionary to store percentile ranks
+percentile_ranks = {}
+
+# Loop through each statistic and calculate percentile rank for each cluster
+for stat in stat_columns:
+    # Create a column for the current statistic's percentile ranks
+    percentile_ranks[stat] = [
+        percentileofscore(total[stat], cluster_means.loc[cluster_id, stat], kind='mean')
+        for cluster_id in cluster_means.index
+    ]
+
+# Convert the dictionary to a DataFrame with clusters as rows
+percentile_ranks_df = pd.DataFrame(percentile_ranks, index=cluster_means.index)
+
+# Rename the index to indicate clusters
+percentile_ranks_df.index.name = 'Cluster'
+
+#total.to_csv('ClusteringBoltsPlayers/EndKMeansClustering.csv', index=False)
