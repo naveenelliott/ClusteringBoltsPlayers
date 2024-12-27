@@ -77,7 +77,7 @@ cluster_centers_df['PC1'] = pca.transform(kmeans.cluster_centers_)[:, 0]
 cluster_centers_df['PC2'] = pca.transform(kmeans.cluster_centers_)[:, 1]
 cluster_centers_df['Cluster'] = range(0, len(cluster_centers_df))
 
-#cluster_centers_df.to_csv('ClusteringBoltsPlayers/ClusterCentersData.csv', index=False)
+cluster_centers_df.to_csv('ClusteringBoltsPlayers/ClusterCentersData.csv', index=False)
 
 
 top_closest_columns = []
@@ -123,4 +123,6 @@ percentile_ranks_df = pd.DataFrame(percentile_ranks, index=cluster_means.index)
 # Rename the index to indicate clusters
 percentile_ranks_df.index.name = 'Cluster'
 
-#total.to_csv('ClusteringBoltsPlayers/EndKMeansClustering.csv', index=False)
+total.drop_duplicates(subset=['Player'], inplace=True)
+
+total.to_csv('ClusteringBoltsPlayers/EndKMeansClustering.csv', index=False)
